@@ -445,3 +445,53 @@ fun ProfileCardFullStackPreview() {
         )
     }
 }
+
+@Preview(
+    showBackground = true,
+    name = "Profil - Light Theme"
+)
+@Composable
+fun ProfileCardLightPreview() {
+    ProfilDeveloppeurTheme(darkTheme = false) {
+        ProfileCard(
+            name = "Louis Baudat",
+            role = "Développeur full-stack",
+            location = "Reims, France",
+            description = "En alternance depuis 1 an, où je réalise des applications en C#/Angular",
+            skills = listOf("C#", "Angular"),
+            experiences = sampleExperiences(),
+            email = "contact@louisbaudat.dev",
+            contact = "github.com/louisbdt",
+            availability = "Disponible pour une alternance",
+            onContactClick = {},
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(24.dp)
+        )
+    }
+}
+
+@Preview(
+    showBackground = true,
+    name = "Profil - Dark Theme"
+)
+@Composable
+fun ProfileCardDarkPreview() {
+    ProfilDeveloppeurTheme(darkTheme = true) {
+        ProfileCard(
+            name = "Louis Baudat",
+            role = "Développeur full-stack",
+            location = "Reims, France",
+            description = "En alternance depuis 1 an, où je réalise des applications en C#/Angular",
+            skills = listOf("C#", "Angular"),
+            experiences = sampleExperiences(),
+            email = "contact@louisbaudat.dev",
+            contact = "github.com/louisbdt",
+            availability = "Disponible pour une alternance",
+            onContactClick = {},
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(24.dp)
+        )
+    }
+}
