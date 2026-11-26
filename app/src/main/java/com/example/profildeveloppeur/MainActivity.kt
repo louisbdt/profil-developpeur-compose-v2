@@ -4,14 +4,20 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.profildeveloppeur.ui.theme.ProfilDeveloppeurTheme
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -30,6 +36,32 @@ class MainActivity : ComponentActivity() {
                     )
                 }
             }
+        }
+    }
+}
+
+@Composable
+fun ProfileAvatar(
+    modifier: Modifier = Modifier
+) {
+    Box(modifier = modifier) {
+        Image(
+            painter = painterResource(id = android.R.drawable.ic_menu_gallery),
+            contentDescription = "Photo de profil",
+            modifier = Modifier.size(96.dp)
+        )
+        Surface(
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .padding(4.dp),
+            shape = MaterialTheme.shapes.small,
+            tonalElevation = 4.dp
+        ) {
+            Text(
+                text = "Disponible",
+                modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
+                style = MaterialTheme.typography.labelSmall
+            )
         }
     }
 }
@@ -82,6 +114,9 @@ fun ProfileCard(
         Column(
             modifier = Modifier.padding(16.dp)
         ) {
+            ProfileAvatar(
+                modifier = Modifier.padding(bottom = 8.dp)
+            )
             ProfileHeader(
                 name = name,
                 role = role,
