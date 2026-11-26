@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,6 +14,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material3.Button
@@ -97,11 +100,36 @@ fun ProfileHeader(
 }
 
 @Composable
-fun SkillItem(
-    skillName: String,
+fun SkillChip(
+    label: String,
     modifier: Modifier = Modifier
 ) {
-    Text(text = skillName, modifier = modifier)
+    Surface(
+        modifier = modifier,
+        shape = MaterialTheme.shapes.medium,
+        tonalElevation = 2.dp
+    ) {
+        Text(
+            text = label,
+            modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
+            style = MaterialTheme.typography.bodyMedium
+        )
+    }
+}
+
+@Composable
+fun SkillsRow(
+    skills: List<String>,
+    modifier: Modifier = Modifier
+) {
+    LazyRow(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        items(skills) { skill ->
+            SkillChip(label = skill)
+        }
+    }
 }
 
 @Composable
@@ -147,12 +175,12 @@ fun ProfileCard(
                 modifier = Modifier.padding(bottom = 8.dp)
             )
 
-            for (skill in skills) {
-                SkillItem(
-                    skillName = skill,
-                    modifier = Modifier.padding(bottom = 4.dp)
-                )
-            }
+            SkillsRow(
+                skills = skills,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 8.dp)
+            )
 
             Text(text = contact, modifier = Modifier.padding(bottom = 8.dp))
 
