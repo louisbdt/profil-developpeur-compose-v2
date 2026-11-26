@@ -1,31 +1,36 @@
-# Profil développeur Compose
+# Profil développeur Compose — v2
 
 ## Description
-Cette application affiche une fiche de profil développeur sous forme de composants Jetpack Compose réutilisables : un en-tête (nom, rôle), une description, une liste de compétences, une information de contact et un bouton d’action. Les données affichées peuvent être modifiées en changeant simplement les paramètres passés aux composables, comme le montrent les deux previews
+Application affichant la fiche d'un développeur : avatar avec badge de disponibilité, en-tête (nom, rôle, localisation), description, liste de compétences, liste d'expériences/projets et zone de contact. Version améliorée du premier devoir, construite avec des listes modernes et un thème Material 3 clair/sombre.
 
-## Notions utilisées
-- composables
-- paramètres
-- modifiers
-- padding externe / interne
-- callbacks
-- previews
+## Composants Compose utilisés
+- `Text` : titres, descriptions, informations
+- `Button` : action principale ("Voir mon GitHub")
+- `Icon` : icône de localisation à côté de la ville
+- `Image` : avatar placeholder du développeur
+- `Card` : en-tête (`ProfileHeaderCard`) et chaque expérience (`ExperienceCard`)
+- `OutlinedTextField` (lecture seule) : email, lien GitHub, disponibilité
+- `Surface` : badge de disponibilité, `SkillChip`
 
-## Explication
-1. **Quels composables avez-vous créés ?**
-   ProfileHeader, SkillItem, ContactButton, ProfileCard, ProfileScreen
-2. **Quel composable représente l'écran principal ?**
-   ProfileScreen.
-3. **Où utilisez-vous un padding externe ?**
-   Dans ProfileScreen, sur le modifier donné à ProfileCard (padding(24.dp)).
-4. **Où utilisez-vous un padding interne ?**
-   Dans ProfileCard, sur la Column du contenu (padding(16.dp)).
-5. **Quel composant reçoit un callback ?**
-   ContactButton, via onClick.
-6. **Quelle information d'accessibilité avez-vous ajoutée (ou pourquoi pas) ?**
-   Aucune information personnalisée : la seule action est un Button Material, qui expose déjà son rôle de bouton par défaut.
-7. **Pourquoi vos composants peuvent-ils être considérés comme réutilisables ?**
-   Ils reçoivent leurs données et leur modifier en paramètres, au lieu de les coder en dur.
+## Layouts utilisés
+- `Column` : structure verticale des cartes et sections
+- `Row` : avatar + informations côte à côte, icône + texte de localisation
+- `Box` : badge superposé sur l'avatar
+- `Spacer` : espacement entre les éléments
+- `Surface` : zones visuelles cohérentes avec le thème
+
+## Liste affichée avec LazyColumn / LazyRow
+- `LazyRow` pour les compétences, chacune affichée par le composable réutilisable `SkillChip`.
+- `LazyColumn` comme conteneur principal de l'écran : `item { }` pour les sections (en-tête, compétences, contact...) et `items(experiences) { }` pour afficher chaque expérience via le composable réutilisable `ExperienceCard`.
+
+## Choix de thème
+`ColorScheme` personnalisé (clair/sombre), `Shapes` arrondies et `Typography` dédiée sont définis dans `Theme.kt`/`Type.kt` et appliqués à l'ensemble de l'écran plutôt que composant par composant. Deux previews (`ProfileCardLightPreview`, `ProfileCardDarkPreview`) forcent chacun des deux thèmes pour vérifier que les couleurs restent lisibles dans les deux cas.
 
 ## Captures d'écran
-![Previews](screenshot/previews.png)
+Thème clair et thème sombre :
+
+![Preview en thème clair](screenshot/preview-light.png)
+![Preview en thème sombre](screenshot/preview-dark.png)
+
+## Notions du chapitre Compose UI réutilisées
+Composants fondamentaux (`Text`, `Button`, `Icon`, `Image`, `Card`, `OutlinedTextField`), layouts (`Column`, `Row`, `Box`, `Spacer`, `Surface`), listes modernes (`LazyRow`, `LazyColumn` avec des composables réutilisables) et Material Design 3 (`ColorScheme`, `Shapes`, `Typography`, thème clair/sombre).
