@@ -10,15 +10,18 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -132,6 +135,62 @@ fun SkillsRow(
     }
 }
 
+data class ExperienceUi(
+    val title: String,
+    val company: String,
+    val period: String,
+    val description: String
+)
+
+fun sampleExperiences(): List<ExperienceUi> {
+    return listOf(
+        ExperienceUi(
+            title = "Développeur full-stack",
+            company = "Alternance en entreprise",
+            period = "2024 - présent",
+            description = "Développement d'applications internes en C#/Angular, du backend à l'interface utilisateur."
+        ),
+        ExperienceUi(
+            title = "Site portfolio personnel",
+            company = "Projet personnel",
+            period = "2024",
+            description = "Développement d'un site vitrine avec React et TypeScript pour présenter mes projets."
+        ),
+        ExperienceUi(
+            title = "Projet académique",
+            company = "IUT de Reims",
+            period = "2023",
+            description = "Réalisation d'une application web avec Symfony et React dans le cadre de la formation."
+        )
+    )
+}
+
+@Composable
+fun ExperienceCard(
+    experience: ExperienceUi,
+    modifier: Modifier = Modifier
+) {
+    Card(modifier = modifier.fillMaxWidth()) {
+        Column(
+            modifier = Modifier.padding(16.dp)
+        ) {
+            Text(
+                text = experience.title,
+                style = MaterialTheme.typography.titleMedium
+            )
+            Text(
+                text = "${experience.company} • ${experience.period}",
+                style = MaterialTheme.typography.bodyMedium
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
+                text = experience.description,
+                style = MaterialTheme.typography.bodyMedium
+            )
+        }
+    }
+}
+
 @Composable
 fun ContactButton(
     label: String,
@@ -153,42 +212,54 @@ fun ProfileCard(
     location: String,
     description: String,
     skills: List<String>,
+    experiences: List<ExperienceUi>,
     contact: String,
     onContactClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Surface(modifier = modifier) {
-        Column(
-            modifier = Modifier.padding(16.dp)
+        LazyColumn(
+            contentPadding = PaddingValues(16.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            ProfileAvatar(
-                modifier = Modifier.padding(bottom = 8.dp)
-            )
-            ProfileHeader(
-                name = name,
-                role = role,
-                location = location,
-                modifier = Modifier.padding(bottom = 8.dp)
-            )
-            Text(
-                text = description,
-                modifier = Modifier.padding(bottom = 8.dp)
-            )
-
-            SkillsRow(
-                skills = skills,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 8.dp)
-            )
-
-            Text(text = contact, modifier = Modifier.padding(bottom = 8.dp))
-
-            ContactButton(
-                label = "Voir mon GitHub",
-                onClick = onContactClick,
-                modifier = Modifier.fillMaxWidth()
-            )
+            item {
+                ProfileAvatar()
+            }
+            item {
+                ProfileHeader(
+                    name = name,
+                    role = role,
+                    location = location
+                )
+            }
+            item {
+                Text(text = description)
+            }
+            item {
+                SkillsRow(
+                    skills = skills,
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+            item {
+                Text(
+                    text = "Expériences",
+                    style = MaterialTheme.typography.titleMedium
+                )
+            }
+            items(experiences) { experience ->
+                ExperienceCard(experience = experience)
+            }
+            item {
+                Text(text = contact)
+            }
+            item {
+                ContactButton(
+                    label = "Voir mon GitHub",
+                    onClick = onContactClick,
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
         }
     }
 }
@@ -202,12 +273,13 @@ fun ProfileScreen(modifier: Modifier = Modifier) {
         location = "Reims, France",
         description = "Étudiant en développement web à l'ESGI. Je m'intéresse particulièrement au développement full-stack, de Symfony/PHP/C# côté backend à React/TypeScript/Angular côté frontend.",
         skills = listOf("Symfony", "React", "TypeScript", "C#","Angular"),
+        experiences = sampleExperiences(),
         contact = "github.com/louisbdt",
         onContactClick = {
 
         },
         modifier = modifier
-            .fillMaxWidth()
+            .fillMaxSize()
             .padding(24.dp)
     )
 }
@@ -222,10 +294,11 @@ fun ProfileCardJuniorPreview() {
             location = "Reims, France",
             description = "Je découvre actuellement Android et Jetpack Compose.",
             skills = listOf("Symfony", "React", "TypeScript"),
+            experiences = sampleExperiences(),
             contact = "github.com/louisbdt",
             onContactClick = {},
             modifier = Modifier
-                .fillMaxWidth()
+                .fillMaxSize()
                 .padding(24.dp)
         )
     }
@@ -241,10 +314,11 @@ fun ProfileCardFullStackPreview() {
             location = "Reims, France",
             description = "En alternance depuis 1 an, où je réalise des applications en C#/Angular",
             skills = listOf("C#", "Angular"),
+            experiences = sampleExperiences(),
             contact = "github.com/louisbdt",
             onContactClick = {},
             modifier = Modifier
-                .fillMaxWidth()
+                .fillMaxSize()
                 .padding(24.dp)
         )
     }
