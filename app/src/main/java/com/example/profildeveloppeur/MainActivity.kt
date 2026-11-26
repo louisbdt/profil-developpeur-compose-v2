@@ -5,7 +5,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -331,9 +330,12 @@ fun ProfileCard(
     onContactClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Surface(modifier = modifier) {
+    Surface(
+        modifier = modifier,
+        color = MaterialTheme.colorScheme.background
+    ) {
         LazyColumn(
-            modifier = Modifier.background(MaterialTheme.colorScheme.background),
+            modifier = Modifier.fillMaxSize(),
             contentPadding = PaddingValues(16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
@@ -385,7 +387,7 @@ fun ProfileCard(
 fun ProfileScreen(modifier: Modifier = Modifier) {
     ProfileCard(
         name = "Louis Baudat",
-        role = "Étudiant en développement web l'ESGI",
+        role = "Étudiant en développement web à l'ESGI",
         location = "Reims, France",
         description = "Étudiant en développement web à l'ESGI. Je m'intéresse particulièrement au développement full-stack, de Symfony/PHP/C# côté backend à React/TypeScript/Angular côté frontend.",
         skills = listOf("Symfony", "React", "TypeScript", "C#","Angular"),
