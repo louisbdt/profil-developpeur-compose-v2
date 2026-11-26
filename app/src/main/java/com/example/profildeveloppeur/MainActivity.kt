@@ -24,6 +24,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -147,7 +148,7 @@ fun sampleExperiences(): List<ExperienceUi> {
         ExperienceUi(
             title = "Développeur full-stack",
             company = "Alternance en entreprise",
-            period = "2024 - présent",
+            period = "2024 - 2026",
             description = "Développement d'applications internes en C#/Angular, du backend à l'interface utilisateur."
         ),
         ExperienceUi(
@@ -192,6 +193,45 @@ fun ExperienceCard(
 }
 
 @Composable
+fun ContactSection(
+    email: String,
+    githubLink: String,
+    availability: String,
+    modifier: Modifier = Modifier
+) {
+    Column(modifier = modifier) {
+        Text(
+            text = "Contact",
+            style = MaterialTheme.typography.titleMedium
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        OutlinedTextField(
+            value = email,
+            onValueChange = {},
+            readOnly = true,
+            label = { Text(text = "Email") },
+            modifier = Modifier.fillMaxWidth()
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        OutlinedTextField(
+            value = githubLink,
+            onValueChange = {},
+            readOnly = true,
+            label = { Text(text = "GitHub") },
+            modifier = Modifier.fillMaxWidth()
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        OutlinedTextField(
+            value = availability,
+            onValueChange = {},
+            readOnly = true,
+            label = { Text(text = "Disponibilité") },
+            modifier = Modifier.fillMaxWidth()
+        )
+    }
+}
+
+@Composable
 fun ContactButton(
     label: String,
     onClick: () -> Unit,
@@ -213,7 +253,9 @@ fun ProfileCard(
     description: String,
     skills: List<String>,
     experiences: List<ExperienceUi>,
+    email: String,
     contact: String,
+    availability: String,
     onContactClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -251,7 +293,12 @@ fun ProfileCard(
                 ExperienceCard(experience = experience)
             }
             item {
-                Text(text = contact)
+                ContactSection(
+                    email = email,
+                    githubLink = contact,
+                    availability = availability,
+                    modifier = Modifier.fillMaxWidth()
+                )
             }
             item {
                 ContactButton(
@@ -274,7 +321,9 @@ fun ProfileScreen(modifier: Modifier = Modifier) {
         description = "Étudiant en développement web à l'ESGI. Je m'intéresse particulièrement au développement full-stack, de Symfony/PHP/C# côté backend à React/TypeScript/Angular côté frontend.",
         skills = listOf("Symfony", "React", "TypeScript", "C#","Angular"),
         experiences = sampleExperiences(),
+        email = "contact@louisbaudat.dev",
         contact = "github.com/louisbdt",
+        availability = "Disponible pour une alternance",
         onContactClick = {
 
         },
@@ -295,7 +344,9 @@ fun ProfileCardJuniorPreview() {
             description = "Je découvre actuellement Android et Jetpack Compose.",
             skills = listOf("Symfony", "React", "TypeScript"),
             experiences = sampleExperiences(),
+            email = "contact@louisbaudat.dev",
             contact = "github.com/louisbdt",
+            availability = "Disponible pour une alternance",
             onContactClick = {},
             modifier = Modifier
                 .fillMaxSize()
@@ -315,7 +366,9 @@ fun ProfileCardFullStackPreview() {
             description = "En alternance depuis 1 an, où je réalise des applications en C#/Angular",
             skills = listOf("C#", "Angular"),
             experiences = sampleExperiences(),
+            email = "contact@louisbaudat.dev",
             contact = "github.com/louisbdt",
+            availability = "Disponible pour une alternance",
             onContactClick = {},
             modifier = Modifier
                 .fillMaxSize()
